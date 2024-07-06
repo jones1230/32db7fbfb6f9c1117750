@@ -1,8 +1,9 @@
-# This manifest creates a file in /tmp folder
-file { '/tmp/school':
-    ensure  => 'file',
-    owner   => 'www-data',
-    group   => 'www-data',
-    mode    => '0744',
-    content => 'I love Puppet',
+# This manifest installs flask from pip3, using Puppet
+package { 'flask':
+  ensure   => '2.1.0',
+  provider => 'pip3',
+}
+package { 'Werkzeug':
+  ensure   => '2.1.1',
+  provider => 'pip3',
 }
