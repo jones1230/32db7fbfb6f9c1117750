@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+# This scripts returns the active IPs on the machine
+
+hostname -I | cut -d' ' -fi ; hostname -i
