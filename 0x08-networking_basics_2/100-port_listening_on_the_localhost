@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-@ Script enables port 98 to listen
-
-nc -l 98
