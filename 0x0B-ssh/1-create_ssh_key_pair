@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# This file creates an ssh key for server with a byte of 4096, passphrase and custom key file name
+ssh-keygen -b 4096 -N betty -f school
