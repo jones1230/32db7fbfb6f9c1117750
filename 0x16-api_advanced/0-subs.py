@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Function returns the number of subscribers for a given valid subreddit"""
+"""Module for 0-subs.py"""
 
 
 def number_of_subscribers(subreddit):
