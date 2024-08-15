@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Check if less than 4 arguments are passed
+if [ "$#" -ne 4 ]; then
+    echo "Usage: $0 PATH_TO_FILE IP USERNAME PATH_TO_SSH_KEY"
+    exit 1
+fi
+
+# Assign parameters to variables
+FILE_PATH=$1
+SERVER_IP=$2
+USERNAME=$3
+SSH_KEY_PATH=$4
+
+# Use scp to transfer the file to the user's home directory with strict host key checking disabled
+scp -i "$SSH_KEY_PATH" -o StrictHostKeyChecking=no "$FILE_PATH" "$USERNAME@$SERVER_IP:~/"
+
+# Check if the scp command was successful
+if [ $? -eq 0 ]; then
+    echo "File transferred successfully!"
+else
+    echo "File transfer failed!"
+    exit 1
+fi
+
