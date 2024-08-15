@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Creates a nginx server and configures it for redirection
 
 # Update package lists
