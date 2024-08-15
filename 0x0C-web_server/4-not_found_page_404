@@ -1,38 +1,23 @@
 #!/usr/bin/env bash
-# Configure Nginx server to give error 404 page
-apt-get update
-apt-get -y install nginx
-ufw allow 'Nginx HTTP'
-chmod -R 755 /var/www
-echo 'Hello World' > /var/www/html/index.html
+# Creates a custom 404 page
+# Update package lists
+sudo apt-get update
 
-new_config=\
-"server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
-               root /var/www/html;
-        index index.html index.htm index.nginx-debian.html;
-        server_name _;
-        location / {
-                try_files \$uri \$uri/ =404;
-        }
-        error_page 404 /404.html;
-        location  /404.html {
-            internal;
-        }
-        
-        if (\$request_filename ~ redirect_me){
-            rewrite ^ https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;
-        }
-}
-"
-echo "Ceci n'est pas une page" > /var/www/html/404.html
+# Install nginx if it's not already installed
+sudo apt-get install -y nginx
 
-echo "$new_config" > /etc/nginx/sites-available/default
+# Create a custom 404 error page
+echo "Ceci n'est pas une page" | sudo tee /var/www/html/404.html
 
-if [ "$(pgrep nginx)" -le 0 ];
-then
-    service nginx start
-else
-    service nginx restart
-fi;
+# Create a backup of the default nginx configuration file
+sudo cp /etc/nginx/sites-available/default /etc/nginx/sites-available/default.bak
+
+# Modify the Nginx configuration to use the custom 404 error page
+sudo sed -i '/^server {/a \\tlocation = /404.html {\n\t\tinternal;\n\t}\n\terror_page 404 /404.html;' /etc/nginx/sites-available/default
+
+# Reload Nginx without using systemctl
+sudo service nginx reload
+
+# Ensure nginx is started
+sudo service nginx start
+
