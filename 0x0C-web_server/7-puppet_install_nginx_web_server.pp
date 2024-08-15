@@ -1,16 +1,26 @@
-#config server
+# Install NginX
+# With puppet
+
+exec { 'apt-get-update':
+  command => '/usr/bin/apt-get update',
+}
 
 package { 'nginx':
-provider => 'apt',
+  ensure  => installed,
+  require => Exec['apt-get-update'],
 }
-exec {'hlbtn_page':
-command => '/usr/bin/sudo /bin/echo Holberton School > /var/www/html/index.nginx-debian.html',
-}
-exec {'redirect_page':
 
-command => '/usr/bin/sudo /bin/sed -i "66i rewrite ^/redirect_me https://www.youtube.com/ permanent;" /etc/nginx/sites-available/default',
+file { '/var/www/html/index.html':
+  content => 'Hello World!',
+  require => Package['nginx'],
 }
-exec {'start_server':
 
-command => '/usr/bin/sudo /usr/sbin/service nginx start',
+exec {'redirect_me':
+  command  => 'sed -i "24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+  provider => 'shell'
+}
+
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
 }
