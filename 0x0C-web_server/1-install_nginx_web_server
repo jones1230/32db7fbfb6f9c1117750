@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# Script configures a new nginx web server after install
+
+# Update package lists
+sudo apt-get update
+
+# Install nginx, using the -y flag to confirm automatically
+sudo apt-get install -y nginx
+
+# Configure Nginx to listen on port 80 and display "Hello World!"
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+
+# Reload Nginx without using systemctl
+sudo service nginx reload
+
+# Ensure nginx is started
+sudo service nginx start
+
+# Check if Nginx is running and listening on port 80
+curl -I http://localhost
+
+
