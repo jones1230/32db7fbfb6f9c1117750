@@ -22,7 +22,3 @@ sudo service nginx reload
 # Ensure nginx is started
 sudo service nginx start
 
-# Check if Nginx is running and returns the custom 404 page
-curl -I http://localhost/nonexistentpage
-curl http://localhost/nonexistentpage
-
