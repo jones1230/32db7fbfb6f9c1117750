@@ -1,0 +1,11 @@
+server {
+    listen 80;
+    server_name 54.87.252.198 therealjesse.tech;  # Replace with your server's IP address or domain
+
+    location / {
+        include proxy_params;
+        proxy_pass http://127.0.0.1:5000;  # Pass requests to Gunicorn on port 5000
+    }
+    error_log /var/log/nginx/gunicorn_error.log;
+    access_log /var/log/nginx/gunicorn_access.log;
+}
